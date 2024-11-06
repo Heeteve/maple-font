@@ -33,7 +33,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: fonts
-        path: fonts
+        name: fonts-NF
+        path: fonts/NF
 
 
