@@ -1,0 +1,39 @@
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Font Build
+
+on:
+  push:
+    branches: [ "variable" ]
+  pull_request:
+    branches: [ "variable" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        pip install foundrytools-cli
+    - name: Run build
+      run: |
+        python3 build.py
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: fonts-NF
+        path: fonts/NF
+
+
